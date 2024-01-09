@@ -15,5 +15,4 @@ function MyDrawer() {
     </Drawer.Navigator>
   );
 }
-
 export default MyDrawer;

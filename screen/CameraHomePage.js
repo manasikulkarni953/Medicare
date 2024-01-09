@@ -1,12 +1,11 @@
-import 'react-native-gesture-handler';
-import * as React from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, ScrollView, Image } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient'; // Import the LinearGradient component
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import { Appbar, Button as PaperButton, Card as PaperCard, Title, Paragraph } from 'react-native-paper';
+import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { NavigationContainer } from '@react-navigation/native';
 
 function CameraHomePage({ navigation }) {
-  const [selectedOption, setSelectedOption] = React.useState('upload');
+  const [selectedOption, setSelectedOption] = useState('upload');
 
   const openCamera = () => {
     navigation.navigate('InfoPage');
@@ -14,164 +13,161 @@ function CameraHomePage({ navigation }) {
 
   return (
     <ImageBackground source={require('../assets/doctorimg.jpeg')} style={styles.backgroundImage}>
-      <View style={styles.header}></View>
-      <ScrollView contentContainerStyle={styles.container}>
-        {/* Use LinearGradient for the overlay with linear background */}
-        <LinearGradient
-          colors={['rgba(0, 0, 0, 0.4)', 'rgba(0, 0, 0, 0.8)']} // Define your linear gradient colors here
-          style={styles.overlay}
-        >
-          <View style={styles.testSelection}>
-            <Icon name="stethoscope" size={27} color="lightyellow" style={styles.medicalTestIcon} />
-            <Text style={styles.testHeading}>Choose The Test</Text>
-          </View>
-          <TouchableOpacity style={styles.testButton} onPress={openCamera}>
-            <View style={styles.buttonContent}>
-              <Icon name="flask" size={24} color="lightyellow" style={styles.buttonIcon} />
-              <Text style={styles.buttonText}>Urine Test</Text>
+      <Appbar.Header style={styles.appBar}>
+      </Appbar.Header>
+      <LinearGradient colors={['rgba(0, 0, 0, 0.4)', 'rgba(0, 0, 0, 0.8)']} style={styles.overlay}>
+        <PaperCard style={styles.card}>
+          <PaperCard.Content style={styles.cardContent}>
+            <View style={styles.stethoscopeContainer}>
+              <Icon name="stethoscope" size={30} color="#fff" style={styles.medicalTestIcon} />
+              <Title style={styles.testHeading}>Select a Medical Test</Title>
             </View>
-            <Icon name="check-circle" size={20} color="lightyellow" style={styles.testIcon} />
+            <Paragraph style={styles.testDescription}>Choose the test you want to perform</Paragraph>
+            <PaperButton mode="outlined" onPress={openCamera} style={styles.testButton}>
+           <Icon name="flask" size={18} color="lightyellow" style={styles.buttonIcon} />
+          <Text style={styles.buttonText}> Urine Test </Text>
+            </PaperButton>
+          </PaperCard.Content>
+        </PaperCard>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={selectedOption === 'upload' ? styles.uploadButtonSelected : styles.uploadButton}
+            onPress={() => setSelectedOption('upload')}
+          >
+            <Icon name="cloud-upload-alt" size={25} color="#fff" style={styles.uploadButtonIcon} />
+            <Text style={styles.uploadButtonText}> Upload Report</Text>
           </TouchableOpacity>
-          <View style={styles.uploadView}>
-            <TouchableOpacity
-              style={selectedOption === 'upload' ? styles.uploadButtonSelected : styles.uploadButton}
-              onPress={() => setSelectedOption('upload')}
-            >
-              <Icon name="cloud-upload-alt" size={25} color="navy" style={styles.uploadButtonIcon} />
-              <Text style={styles.uploadButtonText}>Upload</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={selectedOption === 'view' ? styles.viewButtonSelected : styles.viewButton}
-              onPress={() => {
-                setSelectedOption('view');
-                navigation.navigate('ReportView'); // Navigate to the ReportView screen
-              }}
-            >
-              <Icon name="eye" size={25} color="navy" style={styles.viewButtonIcon} />
-              <Text style={styles.viewButtonText}>View Report</Text>
-            </TouchableOpacity>
-          </View>
-        </LinearGradient>
-      </ScrollView>
+          <TouchableOpacity
+            style={selectedOption === 'view' ? styles.viewButtonSelected : styles.viewButton}
+            onPress={() => {
+              setSelectedOption('view');
+              navigation.navigate('ReportView');
+            }}
+          >
+            <Icon name="eye" size={25} color="#fff" style={styles.viewButtonIcon} />
+            <Text style={styles.viewButtonText}> View Report </Text>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
   backgroundImage: {
-     width: '100%',
-    height: '100%',
-    opacity: 0.9,
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
-  header: {
-    alignItems: 'center',
-    marginTop: 20,
+  appBar: {
+    backgroundColor: 'transparent',
+    marginTop: 10,
   },
   overlay: {
     flex: 2,
-    backgroundColor: 'navy',
-    padding:25,
-    marginTop:100,
-    borderTopLeftRadius: 60,  // Set the top-left border radius
+    padding: 40,
+    borderTopLeftRadius: 60,
     borderTopRightRadius: 60,
   },
-  testSelection: {
+  card: {
+    borderRadius: 15,
+    elevation: 10,
+    backgroundColor: 'navy',
+    paddingBottom: 40,
+    paddingTop: 5,
+    padding: 20
+
+  },
+  cardContent: {
+  alignItems: 'center',
+  },
+  stethoscopeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 30,
+    marginBottom: 15,
   },
   medicalTestIcon: {
     marginRight: 15,
-    marginTop: 0,
   },
   testHeading: {
-    fontSize: 25,
-    color: 'white',
-    textShadowColor: 'rgba(0, 0, 0, 0.6)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 10,
-    marginBottom: 10,
+    fontSize: 23,
+    color: '#fff',
     fontWeight: 'bold',
+  },
+  testDescription: {
+    color: '#ccc',
+    fontSize: 17,
+    marginBottom: 25,
+    textAlign: 'center',
   },
   testButton: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    marginBottom: 50,
-    marginVertical: 50,
-   padding: 10,
     borderRadius: 15,
-    justifyContent: 'center',
-    backgroundColor:'transparent',
-    borderWidth:2,
-    borderColor:'white'
-  },
-  buttonContent: {
     flexDirection: 'row',
-    alignItems: 'center',
-  },
-  buttonIcon: {
-    marginRight: 30,
-    marginLeft:5
+    borderWidth: 2,
+    borderColor: 'grey',
+    paddingHorizontal: 7,
+    paddingVertical: 10,
+    backgroundColor: 'blue',
+    marginLeft: 10,
+  
   },
   buttonText: {
-    color: 'lightyellow',
-    fontSize: 24,
-    marginLeft: 25,
+    color: 'white',
+    fontSize: 21,
     fontWeight: 'bold',
+    marginLeft: 15,
   },
-  testIcon: {
-    marginLeft: 'auto',
-    marginRight: 19,
-  },
-  uploadView: {
+  buttonIcon: {
+    marginRight: 20,
+     },
+  buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
+    marginTop: 50,
   },
   uploadButton: {
-    backgroundColor: 'skyblue',
+    backgroundColor: 'navy',
     borderRadius: 15,
-    width: '40%',
-    padding: 12,
+    width: '45%',
+    paddingVertical: 15,
     alignItems: 'center',
   },
   uploadButtonSelected: {
-    backgroundColor: 'skyblue',
+    backgroundColor: 'navy',
     borderRadius: 15,
-    width: '40%',
-    padding: 8,
-    borderColor: 'white',
+    width: '45%',
+    paddingVertical: 10,
+    borderColor: '#fff',
     borderWidth: 2,
     alignItems: 'center',
   },
   uploadButtonText: {
-    color: 'navy',
-    fontSize: 15,
+    color: '#fff',
+    fontSize: 17,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   viewButton: {
-    backgroundColor: 'skyblue',
+    backgroundColor: 'navy',
     borderRadius: 15,
-    width: '40%',
-    padding: 8,
+    width: '45%',
+    paddingVertical: 15,
     alignItems: 'center',
   },
   viewButtonSelected: {
-    backgroundColor: 'skyblue',
+    backgroundColor: 'navy',
     borderRadius: 15,
-    width: '40%',
-    padding: 5,
-    borderColor: 'white',
+    width: '45%',
+    paddingVertical: 10,
+    borderColor: '#fff',
     borderWidth: 2,
     alignItems: 'center',
   },
   viewButtonText: {
-    color: 'navy',
-    fontSize: 15,
+    color: '#fff',
+    fontSize: 17,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   uploadButtonIcon: {
     marginRight: 5,

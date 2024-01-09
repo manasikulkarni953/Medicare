@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5'; // Import FontAwesome5
 import { storeUserCredentials } from '../components/SessionHandling'; // Correct the import statement
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { Link } from '@react-navigation/native';
 const Login = () => {
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -109,17 +109,16 @@ const Login = () => {
               <Button title="Sign In" onPress={loginHandle} />
               {failed && <Text style={styles.errorText}>Please Enter a valid Email or Password</Text>}
             </View>
+            <TouchableOpacity>
+                  <Link to={{ screen: 'HomePage' }}>Shortcut to Open HomePage  </Link>
+                </TouchableOpacity>
 
             <Button title="Create Account" onPress={() => RegistrationHandle('Registration')} />
           </View>
         </View>
       </BackgroundImage>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('HomePage')}
-        style={styles.cameraButton}
-      >
-        <Text style={styles.cameraButtonText}>Camera</Text>
-      </TouchableOpacity>
+    
+     
     </View>
   );
 };
@@ -175,7 +174,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   cameraButton: {
-    backgroundColor: 'blue', // Customize the button's appearance
+    backgroundColor: 'blue', 
     padding: 10,
     borderRadius: 20,
     marginTop: 250,

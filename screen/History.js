@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, PermissionsAndroid } from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
 import LinearGradient from 'react-native-linear-gradient';
 
 const History = () => {
   const [pastedURL, setPastedURL] = useState('');
+
+  useEffect(() => {
+
+  }, [pastedURL]);
 
   const requestStoragePermission = async () => {
     try {
@@ -49,15 +53,14 @@ const History = () => {
         // the temp file path
         console.log('The file saved to ', res.path());
         alert('File downloaded successfully');
+        // Refresh the page by updating the state
+        setPastedURL('');
       });
   };
 
   return (
-    <LinearGradient
-      colors={['indigo', 'transparent']}
-      style={{ flex:1}}
-    >
-      <View style={{ flex: 1, justifyContent:'center', alignItems: 'center',marginBottom:30}}>
+    <LinearGradient colors={['indigo', 'transparent']} style={{ flex: 1 }}>
+      <View style={{ flex: 1, marginTop: 30 }}>
         <TextInput
           placeholder="Enter URL"
           style={{
@@ -65,8 +68,8 @@ const History = () => {
             height: 50,
             borderWidth: 1,
             alignSelf: 'center',
-            padding: 16,
-            borderRadius: 10,
+            padding: 15,
+            borderRadius: 15,
             backgroundColor: 'rgba(255, 255, 255, 0.7)', // Transparent white background
           }}
           value={pastedURL}
@@ -76,14 +79,13 @@ const History = () => {
           style={{
             width: '90%',
             height: 50,
-            borderWidth:1,
+            borderWidth: 1,
             alignSelf: 'center',
             borderRadius: 10,
-            marginTop: 55,
+            marginTop: 30,
             backgroundColor: 'indigo',
             justifyContent: 'center',
             alignItems: 'center',
-            
           }}
           onPress={() => {
             if (pastedURL !== '') {
@@ -93,7 +95,7 @@ const History = () => {
             }
           }}
         >
-          <Text style={{ color: '#fff', fontSize: 20, }}>Download file</Text>
+          <Text style={{ color: '#fff', fontSize: 20 }}>Download file</Text>
         </TouchableOpacity>
       </View>
     </LinearGradient>

@@ -1,27 +1,25 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LinearGradient from 'react-native-linear-gradient';
 
 const InfoPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={['#fad899', 'midnightblue']}
-        style={styles.upperHalf}
-      >
+      <LinearGradient colors={['#fad899', 'midnightblue']} style={styles.upperHalf}>
         {/* Calling icon */}
-        <View style={styles.callIcon}>
-          <Icon name="phone" size={30} color="white" style={styles.callIconStyle} />
-        </View>
+        <TouchableOpacity style={styles.callIcon} onPress={() => {/* Add functionality for calling */}}>
+          <Icon name="phone" size={30} color="white" />
+        </TouchableOpacity>
         <View style={styles.callSupportTextContainer}>
           <Text style={styles.callSupportText}>Need Help? Talk to us</Text>
         </View>
         {/* Profile photo and user text */}
         <View style={styles.profileContainer}>
-          <Icon name="user-circle" size={50} color="white" style={styles.profileIcon} />
+          <Image source={require('../assets/profile.jpeg')} style={styles.profileIcon} />
           <Text style={styles.userText}>Hello, User</Text>
         </View>
+
         <View style={styles.textContainer}>
           <Text style={styles.headtext}>Let's Get Started!</Text>
           <View style={styles.parameterRow}>
@@ -33,7 +31,7 @@ const InfoPage = ({ navigation }) => {
             <Text style={styles.result}>Clinically validated results</Text>
           </View>
           <View style={styles.parameterRow}>
-            <Icon name="share"  color="navy" size={20} style={styles.iconStyle} />
+            <Icon name="share" color="navy" size={20} style={styles.iconStyle} />
             <Text style={styles.share}>Share your results easily</Text>
           </View>
         </View>
@@ -80,6 +78,7 @@ const IconWithText = ({ name, text, color, size, style }) => (
   </View>
 );
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -89,23 +88,21 @@ const styles = StyleSheet.create({
     flex: 1,
     borderBottomLeftRadius: 25,
     borderBottomRightRadius: 25,
+    padding: 10,
   },
   contentContainer: {
     width: '70%',
-    paddingTop:20,
+    paddingTop: 20,
     alignSelf: 'auto',
-    marginLeft:20
+    marginLeft: 20,
   },
   iconsContainer: {
     flexDirection: 'row-reverse',
-    marginTop:10,
-  
-     // Increased the spacing
+    marginTop: 10,
   },
   iconColumn: {
     flex: 1,
-    padding:15,
-  
+    padding: 15,
   },
   touchableButton: {
     backgroundColor: 'white',
@@ -125,9 +122,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   iconWithTextContainer: {
-    alignItems:'center',
-    
-  
+    alignItems: 'center',
   },
   iconText: {
     color: 'black',
@@ -135,8 +130,8 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.5)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 4,
-    padding:10,
-    alignItems:'center'
+    padding: 10,
+    alignItems: 'center',
   },
   iconStyle: {
     alignSelf: 'auto',
@@ -149,11 +144,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
-    marginTop:25,
-   borderWidth:1,
-    borderColor:'white',
-    marginLeft:30,
-    marginRight:30
+    marginTop: 20,
+    borderWidth: 1,
+    borderColor: 'white',
+    marginLeft: 30,
+    marginRight: 30,
   },
   iconTest: {
     marginLeft: 10,
@@ -163,20 +158,24 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 19,
     fontWeight: 'bold',
+    
   },
   profileContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 10,
-    marginTop: 20,
+    marginLeft: 7,
+    marginTop: 15,
   },
   profileIcon: {
-    marginRight: 10,
-  },
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    },
   userText: {
     color: 'indigo',
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
+    marginLeft: 10,
   },
   callIcon: {
     position: 'absolute',
@@ -184,10 +183,9 @@ const styles = StyleSheet.create({
     right: 30,
     backgroundColor: 'indigo',
     padding: 10,
-    borderRadius:20,
-    width:60
+    borderRadius: 20,
+    width: 60,
   },
-  
   callSupportTextContainer: {
     position: 'absolute',
     top: 63,
@@ -197,7 +195,7 @@ const styles = StyleSheet.create({
   callSupportText: {
     color: 'black',
     fontSize: 13,
-    fontWeight:'600'
+    fontWeight: '600',
   },
   headtext: {
     fontSize: 22,
@@ -210,7 +208,7 @@ const styles = StyleSheet.create({
   parameterRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 20, // Increased the spacing
+    marginVertical: 20,
   },
   parameter: {
     color: 'white',
@@ -241,12 +239,10 @@ const styles = StyleSheet.create({
     fontSize: 17,
     textAlign: 'auto',
   },
-  medicare:{
-    fontSize:20,
-    fontWeight:'600',
-    
-    
-  }
+  medicare: {
+    fontSize: 20,
+    fontWeight: '600',
+  },
 });
 
 export default InfoPage;
